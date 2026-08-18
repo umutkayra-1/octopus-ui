@@ -16,7 +16,7 @@ Built with React 19 + Vite + React Router.
 **Install:**
 
 ```bash
-npx degit octopuslab-tr/support-center-template my-support
+npx degit umutkayra-1/support-center-template my-support
 cd my-support
 npm install
 npm run dev

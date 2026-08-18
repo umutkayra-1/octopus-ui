@@ -169,7 +169,7 @@ export default function Layout({ children }) {
             <Link to="/ai" className={`oui-navlink ${pathname === '/ai' ? 'active' : ''}`}>
               <Bot size={15} /> <span>{t('aiAgents')}</span>
             </Link>
-            <a href="https://github.com/octopuslab-tr" target="_blank" rel="noopener noreferrer" className="oui-navlink">
+            <a href="https://github.com/umutkayra-1" target="_blank" rel="noopener noreferrer" className="oui-navlink">
               <Github size={15} /> <span>GitHub</span>
             </a>
             <button className="oui-lang-btn" onClick={toggle} aria-label="Toggle language">
@@ -196,7 +196,7 @@ export default function Layout({ children }) {
             {t('footerBuiltBy')} <a href="https://octopuslab.tr" target="_blank" rel="noopener noreferrer">octopuslab.tr</a> — {t('footerTagline')}
           </div>
           <div className="oui-footer-right">
-            <a href="https://github.com/octopuslab-tr" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://github.com/umutkayra-1" target="_blank" rel="noopener noreferrer">GitHub</a>
             <a href="https://octopuslab.tr" target="_blank" rel="noopener noreferrer">OctopusLab</a>
           </div>
         </div>

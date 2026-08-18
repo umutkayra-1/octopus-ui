@@ -6,7 +6,7 @@ export const templates = [
     description: 'A beautiful, customizable, bilingual (TR/EN) support center and FAQ page template. Includes full-text search, collection-based navigation, article feedback, and responsive design.',
     category: 'Support',
     tags: ['React', 'Vite', 'i18n', 'FAQ', 'Help Center'],
-    github: 'https://github.com/octopuslab-tr/support-center-template',
+    github: 'https://github.com/umutkayra-1/support-center-template',
     previewImg: null,
     features: [
       'Bilingual support (TR/EN)',
@@ -16,7 +16,7 @@ export const templates = [
       'Responsive sidebar navigation',
       'Customizable via config.js'
     ],
-    install: 'npx degit octopuslab-tr/support-center-template my-support\ncd my-support\nnpm install\nnpm run dev',
+    install: 'npx degit umutkayra-1/support-center-template my-support\ncd my-support\nnpm install\nnpm run dev',
     aiSkill: true,
     version: '1.0.0',
     updatedAt: '2026-08-18'
