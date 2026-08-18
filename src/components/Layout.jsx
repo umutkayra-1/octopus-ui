@@ -1,8 +1,10 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Github, Bot, Package } from 'lucide-react'
+import { Github, Bot, Package, Globe } from 'lucide-react'
+import { useLang } from '../i18n'
 
 export default function Layout({ children }) {
   const { pathname } = useLocation()
+  const { lang, toggle, t } = useLang()
 
   return (
     <div className="oui-root">
@@ -13,18 +15,23 @@ export default function Layout({ children }) {
 
         .oui-root {
           --navy: #0F2E5C;
+          --navy-deep: #091D3A;
           --cyan: #00B4D8;
+          --cyan-glow: rgba(0, 180, 216, 0.15);
           --orange: #FF6B35;
           --offwhite: #F8F9FA;
-          --darkgray: #1A1A2E;
-          --bg: #0A0E1A;
-          --bg-card: rgba(248, 249, 250, 0.03);
-          --bg-card-hover: rgba(248, 249, 250, 0.06);
-          --border: rgba(248, 249, 250, 0.08);
-          --border-hover: rgba(248, 249, 250, 0.16);
-          --text-primary: #F8F9FA;
-          --text-secondary: rgba(248, 249, 250, 0.7);
-          --text-muted: rgba(248, 249, 250, 0.4);
+          --bg: #070B14;
+          --bg-surface: rgba(15, 46, 92, 0.25);
+          --bg-card: rgba(15, 46, 92, 0.2);
+          --bg-card-hover: rgba(15, 46, 92, 0.35);
+          --bg-glass: rgba(15, 46, 92, 0.12);
+          --border: rgba(0, 180, 216, 0.08);
+          --border-hover: rgba(0, 180, 216, 0.2);
+          --text-primary: #F0F4F8;
+          --text-secondary: rgba(240, 244, 248, 0.65);
+          --text-muted: rgba(240, 244, 248, 0.35);
+          --glow-sm: 0 0 20px rgba(0, 180, 216, 0.08);
+          --glow-md: 0 0 40px rgba(0, 180, 216, 0.1);
           min-height: 100vh;
           background: var(--bg);
           color: var(--text-primary);
@@ -32,53 +39,96 @@ export default function Layout({ children }) {
           font-size: 15px;
           line-height: 1.6;
           -webkit-font-smoothing: antialiased;
+          position: relative;
+          overflow-x: hidden;
         }
+
+        .oui-root::before {
+          content: '';
+          position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+          background:
+            radial-gradient(ellipse 80% 60% at 50% -10%, rgba(15, 46, 92, 0.5) 0%, transparent 70%),
+            radial-gradient(ellipse 40% 40% at 80% 20%, rgba(0, 180, 216, 0.06) 0%, transparent 60%),
+            radial-gradient(ellipse 40% 40% at 10% 80%, rgba(0, 180, 216, 0.04) 0%, transparent 60%);
+          pointer-events: none; z-index: 0;
+        }
+
+        .oui-root > * { position: relative; z-index: 1; }
 
         .oui-header {
           position: sticky; top: 0; z-index: 60;
-          background: rgba(10, 14, 26, 0.85);
-          backdrop-filter: blur(16px);
-          border-bottom: 1px solid var(--border);
+          background: rgba(7, 11, 20, 0.7);
+          backdrop-filter: blur(24px) saturate(1.4);
+          border-bottom: 1px solid rgba(0, 180, 216, 0.06);
         }
         .oui-header-in {
           max-width: 1200px; margin: 0 auto;
-          height: 64px; padding: 0 24px;
+          height: 72px; padding: 0 32px;
           display: flex; align-items: center; gap: 32px;
         }
         .oui-brand {
-          display: flex; align-items: center; gap: 10px;
+          display: flex; align-items: center; gap: 12px;
           text-decoration: none; color: var(--text-primary);
           font-family: 'Playfair Display', serif;
-          font-size: 20px; font-weight: 500; letter-spacing: -0.3px;
+          font-size: 21px; font-weight: 500; letter-spacing: -0.3px;
+        }
+        .oui-brand img {
+          height: 34px; width: auto;
+          filter: drop-shadow(0 0 12px rgba(0, 180, 216, 0.3));
         }
         .oui-brand-dot { color: var(--cyan); }
-        .oui-nav { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+        .oui-nav { margin-left: auto; display: flex; align-items: center; gap: 6px; }
         .oui-navlink {
-          display: flex; align-items: center; gap: 6px;
-          padding: 7px 14px; border-radius: 8px;
+          display: flex; align-items: center; gap: 7px;
+          padding: 8px 16px; border-radius: 999px;
           font-size: 13.5px; font-weight: 500; color: var(--text-secondary);
-          text-decoration: none; transition: all 0.2s ease;
-          cursor: pointer; border: none; background: none; font-family: inherit;
+          text-decoration: none; transition: all 0.25s ease;
+          cursor: pointer; border: 1px solid transparent;
+          background: none; font-family: inherit;
         }
-        .oui-navlink:hover { color: var(--text-primary); background: var(--bg-card-hover); }
-        .oui-navlink.active { color: var(--cyan); background: rgba(0, 180, 216, 0.08); }
-        .oui-navlink-cta {
-          background: var(--cyan); color: #0A0E1A; font-weight: 600;
-          border: none; cursor: pointer;
+        .oui-navlink:hover {
+          color: var(--text-primary);
+          background: rgba(0, 180, 216, 0.06);
+          border-color: rgba(0, 180, 216, 0.1);
         }
-        .oui-navlink-cta:hover { background: #00C5EC; color: #0A0E1A; }
+        .oui-navlink.active {
+          color: var(--cyan);
+          background: rgba(0, 180, 216, 0.08);
+          border-color: rgba(0, 180, 216, 0.15);
+        }
+        .oui-lang-btn {
+          display: flex; align-items: center; gap: 5px;
+          padding: 6px 12px; border-radius: 999px;
+          font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
+          color: var(--text-secondary);
+          background: rgba(0, 180, 216, 0.06);
+          border: 1px solid rgba(0, 180, 216, 0.1);
+          cursor: pointer; font-family: inherit;
+          transition: all 0.25s ease;
+        }
+        .oui-lang-btn:hover {
+          color: var(--cyan);
+          border-color: rgba(0, 180, 216, 0.25);
+          background: rgba(0, 180, 216, 0.1);
+        }
 
-        .oui-main { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .oui-main { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
 
         .oui-footer {
-          border-top: 1px solid var(--border);
-          padding: 48px 24px 36px; margin-top: 80px;
+          border-top: 1px solid rgba(0, 180, 216, 0.06);
+          padding: 48px 32px 40px; margin-top: 100px;
+          background: rgba(7, 11, 20, 0.5);
         }
         .oui-footer-in {
           max-width: 1200px; margin: 0 auto;
           display: flex; justify-content: space-between; align-items: center;
           flex-wrap: wrap; gap: 16px;
         }
+        .oui-footer-brand {
+          display: flex; align-items: center; gap: 10px;
+          margin-bottom: 8px;
+        }
+        .oui-footer-brand img { height: 24px; width: auto; opacity: 0.6; }
         .oui-footer-left {
           font-size: 13px; color: var(--text-muted);
         }
@@ -93,39 +143,39 @@ export default function Layout({ children }) {
           color: var(--text-muted); text-decoration: none; font-size: 13px;
           transition: color 0.2s;
         }
-        .oui-footer-right a:hover { color: var(--text-primary); }
+        .oui-footer-right a:hover { color: var(--cyan); }
 
         @media (max-width: 640px) {
-          .oui-header-in { gap: 16px; }
+          .oui-header-in { gap: 16px; padding: 0 20px; }
+          .oui-main { padding: 0 20px; }
           .oui-navlink span { display: none; }
+          .oui-brand img { height: 28px; }
         }
       `}</style>
 
       <header className="oui-header">
         <div className="oui-header-in">
           <Link to="/" className="oui-brand">
-            <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="16" cy="12" r="8" fill="var(--cyan)" opacity="0.15"/>
-              <circle cx="16" cy="12" r="5" fill="var(--cyan)" opacity="0.3"/>
-              <circle cx="16" cy="12" r="2.5" fill="var(--cyan)"/>
-              <path d="M8 20 Q6 28 4 30" stroke="var(--cyan)" strokeWidth="1.5" strokeLinecap="round" opacity="0.4"/>
-              <path d="M11 21 Q10 28 9 30" stroke="var(--cyan)" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-              <path d="M16 22 Q16 28 16 30" stroke="var(--cyan)" strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
-              <path d="M21 21 Q22 28 23 30" stroke="var(--cyan)" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-              <path d="M24 20 Q26 28 28 30" stroke="var(--cyan)" strokeWidth="1.5" strokeLinecap="round" opacity="0.4"/>
-            </svg>
+            <img
+              src="https://octopuslab.tr/assets/octopus_transparent.png"
+              alt="OctopusLab"
+            />
             Octopus<span className="oui-brand-dot">UI</span>
           </Link>
           <nav className="oui-nav">
             <Link to="/" className={`oui-navlink ${pathname === '/' ? 'active' : ''}`}>
-              <Package size={15} /> <span>Templates</span>
+              <Package size={15} /> <span>{t('templates')}</span>
             </Link>
             <Link to="/ai" className={`oui-navlink ${pathname === '/ai' ? 'active' : ''}`}>
-              <Bot size={15} /> <span>AI Agents</span>
+              <Bot size={15} /> <span>{t('aiAgents')}</span>
             </Link>
             <a href="https://github.com/octopuslab-tr" target="_blank" rel="noopener noreferrer" className="oui-navlink">
               <Github size={15} /> <span>GitHub</span>
             </a>
+            <button className="oui-lang-btn" onClick={toggle} aria-label="Toggle language">
+              <Globe size={13} />
+              {lang === 'tr' ? 'EN' : 'TR'}
+            </button>
           </nav>
         </div>
       </header>
@@ -137,7 +187,13 @@ export default function Layout({ children }) {
       <footer className="oui-footer">
         <div className="oui-footer-in">
           <div className="oui-footer-left">
-            Built by <a href="https://octopuslab.tr" target="_blank" rel="noopener noreferrer">octopuslab.tr</a> — Open-source UI templates for humans and AI agents.
+            <div className="oui-footer-brand">
+              <img
+                src="https://octopuslab.tr/assets/octopus_transparent.png"
+                alt="OctopusLab"
+              />
+            </div>
+            {t('footerBuiltBy')} <a href="https://octopuslab.tr" target="_blank" rel="noopener noreferrer">octopuslab.tr</a> — {t('footerTagline')}
           </div>
           <div className="oui-footer-right">
             <a href="https://github.com/octopuslab-tr" target="_blank" rel="noopener noreferrer">GitHub</a>
