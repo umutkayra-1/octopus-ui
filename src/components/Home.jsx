@@ -3,20 +3,34 @@ import { Link } from 'react-router-dom'
 import { Search, Download, Github, Bot, ArrowRight, Tag, ExternalLink } from 'lucide-react'
 import Layout from './Layout'
 import { templates, categories } from '../templates'
+import { SupportPreviewCard } from './SupportPreview'
+
+const PREVIEW_MAP = {
+  'support-center': SupportPreviewCard,
+}
 
 function TemplateCard({ t }) {
+  const Preview = PREVIEW_MAP[t.id]
   return (
     <Link to={`/template/${t.id}`} className="oui-card">
       <div className="oui-card-preview">
-        <div className="oui-card-preview-placeholder">
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-            <rect x="4" y="4" width="40" height="40" rx="8" stroke="rgba(248,249,250,0.15)" strokeWidth="1.5" fill="none"/>
-            <rect x="8" y="8" width="32" height="6" rx="2" fill="rgba(0,180,216,0.15)"/>
-            <rect x="8" y="18" width="12" height="22" rx="2" fill="rgba(248,249,250,0.05)"/>
-            <rect x="24" y="18" width="16" height="10" rx="2" fill="rgba(248,249,250,0.05)"/>
-            <rect x="24" y="32" width="16" height="8" rx="2" fill="rgba(248,249,250,0.05)"/>
-          </svg>
-        </div>
+        {Preview ? (
+          <div style={{ width: '100%', height: '100%', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '12px' }}>
+            <div style={{ width: '100%', borderRadius: '6px', overflow: 'hidden', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <Preview />
+            </div>
+          </div>
+        ) : (
+          <div className="oui-card-preview-placeholder">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <rect x="4" y="4" width="40" height="40" rx="8" stroke="rgba(248,249,250,0.15)" strokeWidth="1.5" fill="none"/>
+              <rect x="8" y="8" width="32" height="6" rx="2" fill="rgba(0,180,216,0.15)"/>
+              <rect x="8" y="18" width="12" height="22" rx="2" fill="rgba(248,249,250,0.05)"/>
+              <rect x="24" y="18" width="16" height="10" rx="2" fill="rgba(248,249,250,0.05)"/>
+              <rect x="24" y="32" width="16" height="8" rx="2" fill="rgba(248,249,250,0.05)"/>
+            </svg>
+          </div>
+        )}
       </div>
       <div className="oui-card-body">
         <div className="oui-card-head">

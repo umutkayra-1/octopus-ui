@@ -3,6 +3,11 @@ import { ArrowLeft, Github, Download, Bot, Copy, Check, ExternalLink, Tag } from
 import { useState } from 'react'
 import Layout from './Layout'
 import { templates } from '../templates'
+import { SupportPreviewHero } from './SupportPreview'
+
+const HERO_MAP = {
+  'support-center': SupportPreviewHero,
+}
 
 function CopyBlock({ text, label }) {
   const [copied, setCopied] = useState(false)
@@ -183,6 +188,12 @@ export default function TemplateDetail() {
             </div>
           </div>
         </div>
+
+        {HERO_MAP[t.id] && (
+          <div style={{ marginBottom: '48px', maxWidth: '860px' }}>
+            {(() => { const HeroPreview = HERO_MAP[t.id]; return <HeroPreview /> })()}
+          </div>
+        )}
 
         <div className="oui-detail-body">
           <div>
